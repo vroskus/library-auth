@@ -1,6 +1,6 @@
 {
   "name": "@vroskus/library-auth",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Auth",
   "author": "Vilius Roškus <vilius@regattas.eu>",
   "license": "MIT",
@@ -19,7 +19,10 @@
     "test:e2e:post": "jest-coverage-thresholds-bumper"
   },
   "dependencies": {
-    "@vroskus/library-cookies": "1.0.4",
+    "@types/express-jwt": "7.4.2",
+    "@types/jsonwebtoken": "9.0.1",
+    "@types/lodash": "4.14.192",
+    "@vroskus/library-cookies": "1.0.5",
     "bcrypt-nodejs": "0.0.3",
     "express-jwt": "8.4.1",
     "express-useragent": "1.0.15",
