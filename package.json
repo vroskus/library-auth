@@ -9,6 +9,10 @@
     "url": "git+https://github.com/vroskus/library-auth.git"
   },
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "postinstall": "npm run build",
     "build": "tsc",
@@ -19,7 +23,7 @@
     "test:e2e:post": "jest-coverage-thresholds-bumper"
   },
   "dependencies": {
-    "@vroskus/library-cookies": "1.0.6",
+    "@vroskus/library-cookies": "1.0.8",
     "bcrypt-nodejs": "0.0.3",
     "express-jwt": "8.4.1",
     "express-useragent": "1.0.15",
