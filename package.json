@@ -14,7 +14,6 @@
     "dist/"
   ],
   "scripts": {
-    "postinstall": "npm run build",
     "build": "tsc",
     "test": "npm run test:eslint && npm run test:e2e",
     "test:eslint": "eslint src test --fix",
@@ -23,7 +22,7 @@
     "test:e2e:post": "jest-coverage-thresholds-bumper"
   },
   "dependencies": {
-    "@vroskus/library-cookies": "1.0.8",
+    "@vroskus/library-cookies": "1.0.9",
     "bcrypt-nodejs": "0.0.3",
     "express-jwt": "8.4.1",
     "express-useragent": "1.0.15",
@@ -53,7 +52,7 @@
     "npm-check": "6.0.1",
     "supertest": "6.3.3",
     "ts-jest": "29.1.0",
-    "typescript": "4.9.5"
+    "typescript": "5.0.4"
   },
   "jest": {
     "preset": "ts-jest",
