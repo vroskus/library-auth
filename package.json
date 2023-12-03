@@ -13,7 +13,6 @@
   "files": [
     "dist/"
   ],
-  "type": "module",
   "scripts": {
     "build": "tsc",
     "test": "npm run test:eslint && npm run test:e2e",
@@ -23,7 +22,7 @@
     "test:e2e:post": "jest-coverage-thresholds-bumper"
   },
   "dependencies": {
-    "@vroskus/library-cookies": "1.0.11",
+    "@vroskus/library-cookies": "1.0.12",
     "bcrypt-nodejs": "0.0.3",
     "express-jwt": "8.4.1",
     "express-useragent": "1.0.15",
@@ -36,7 +35,7 @@
     "@types/jest": "29.5.10",
     "@types/jsonwebtoken": "9.0.5",
     "@types/lodash": "4.14.202",
-    "@types/node": "20.10.2",
+    "@types/node": "20.10.3",
     "@typescript-eslint/eslint-plugin": "6.13.1",
     "@typescript-eslint/parser": "6.13.1",
     "body-parser": "1.20.2",
