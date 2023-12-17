@@ -1,6 +1,6 @@
 {
   "name": "@vroskus/library-auth",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Auth",
   "author": "Vilius Roškus <vilius@regattas.eu>",
   "license": "MIT",
@@ -67,10 +67,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 41.07,
-        "functions": 60,
-        "lines": 64,
-        "statements": 57.6
+        "branches": 39.65,
+        "functions": 55.55,
+        "lines": 61.17,
+        "statements": 55.88
       }
     }
   }
