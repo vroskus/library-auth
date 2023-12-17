@@ -16,6 +16,8 @@ import geoip from 'geoip-lite';
 import useragentMiddleware from 'express-useragent';
 import {
   getItem,
+  removeItem,
+  setItem,
 } from '@vroskus/library-cookies/dist/node';
 
 // Types
@@ -109,8 +111,10 @@ export const userIdMiddleware = <REQ extends $Request>({
     next();
   };
 
+// agentMiddleware
 export const agentMiddleware = () => useragentMiddleware.express();
 
+// generateAccessToken
 export const generateAccessToken = <AT extends object>(
   params: {
     payload: AT;
@@ -128,6 +132,7 @@ export const generateAccessToken = <AT extends object>(
   return accessToken;
 };
 
+// generatePassword
 export const generatePassword = (
   input: string,
 ): string => bcrypt.hashSync(
@@ -135,6 +140,7 @@ export const generatePassword = (
   bcrypt.genSaltSync(12),
 );
 
+// validatePassword
 export const validatePassword = (
   input: string,
   hash: string | void,
@@ -143,6 +149,7 @@ export const validatePassword = (
   hash,
 );
 
+// getRequestAgent
 export const getRequestAgent = (req: $Request): $Agent => {
   const userAgent: {
     platform: string;
@@ -187,4 +194,81 @@ export const getRequestAgent = (req: $Request): $Agent => {
   }
 
   return output;
+};
+
+// setAuthCookies
+export const setAuthCookies = ({
+  accessToken,
+  domain,
+  expires,
+  key,
+  req,
+  secure,
+}: {
+  accessToken: string;
+  domain: string,
+  expires: Date;
+  key: string,
+  req: $Request;
+  secure: boolean,
+}): void => {
+  setItem(
+    req,
+    key,
+    accessToken,
+    {
+      domain,
+      expires,
+      secure,
+    },
+  );
+  setItem(
+    req,
+    key,
+    accessToken,
+    {
+      domain: `.${domain}`,
+      expires,
+      secure,
+    },
+  );
+
+  // Only for development environment
+  if (!secure) {
+    setItem(
+      req,
+      key,
+      accessToken,
+      {
+        expires,
+        secure,
+      },
+    );
+  }
+};
+
+// removeAuthCookies
+export const removeAuthCookies = ({
+  domain,
+  key,
+  req,
+}: {
+  domain: string,
+  key: string,
+  req: $Request;
+}): void => {
+  removeItem(
+    req,
+    key,
+    {
+      domain,
+    },
+  );
+  removeItem(
+    req,
+    key,
+    {
+      domain: `.${domain}`,
+    },
+  );
 };
