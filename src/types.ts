@@ -1,14 +1,14 @@
 export type $Agent = {
-  platform: string;
-  os: string;
   browser: string;
-  ip: string;
-  country?: string;
   city?: string;
+  country?: string;
+  ip: string;
+  os: string;
+  platform: string;
 };
 
 export type $AccessTokenPayload = {
   id: string;
-  tokenType: string;
   tokenId: string;
+  tokenType: string;
 };

@@ -105,7 +105,6 @@ export const userIdMiddleware = <REQ extends $Request>({
           setUserId(accessTokenPayload.id);
         }
       }
-    /* eslint-disable-next-line no-empty */
     } catch (e) {}
 
     next();
@@ -152,9 +151,9 @@ export const validatePassword = (
 // getRequestAgent
 export const getRequestAgent = (req: $Request): $Agent => {
   const userAgent: {
-    platform: string;
-    os: string;
     browser: string;
+    os: string;
+    platform: string;
   } | null = _.get(
     req,
     'useragent',
@@ -184,8 +183,8 @@ export const getRequestAgent = (req: $Request): $Agent => {
   };
 
   const geoData: {
-    country: string;
     city: string;
+    country: string;
   } | null = geoip.lookup(ip);
 
   if (geoData !== null) {
