@@ -22,7 +22,7 @@
     "test:e2e:post": "jest-coverage-thresholds-bumper"
   },
   "dependencies": {
-    "@vroskus/library-cookies": "^1.0.18",
+    "@vroskus/library-cookies": "^1.0.19",
     "bcrypt-nodejs": "^0.0.3",
     "express-jwt": "^8.4.1",
     "express-useragent": "^1.0.15",
@@ -67,10 +67,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 37.93,
+        "branches": 41.93,
         "functions": 55.55,
-        "lines": 61.17,
-        "statements": 55.88
+        "lines": 61.79,
+        "statements": 56.6
       }
     }
   }

@@ -4,6 +4,13 @@ import type {
   Request as $Request,
   Response as $Response,
 } from 'express';
+import type {
+  IsRevoked,
+  Params,
+} from 'express-jwt';
+import type {
+  Jwt,
+} from 'jsonwebtoken';
 
 // Helpers
 import _ from 'lodash';
@@ -40,12 +47,25 @@ export const authCheckMiddleware = <ATP extends $AccessTokenPayload>({
   cookie?: string;
   secret: string;
 }) => {
-  const config = {
+  let getToken: ((req: $Request) => string | undefined) | undefined;
+
+  const isRevoked: IsRevoked = async (
+    req,
+    params?: Jwt,
+  ) => {
+    if (typeof params !== 'undefined' && typeof params.payload !== 'string') {
+      const jwtPayload = params.payload as ATP;
+
+      return accessTokenCheck(jwtPayload);
+    }
+
+    return true;
+  };
+
+  const config: Params = {
     algorithms: [algorithm],
-    getToken: undefined,
-    isRevoked: async (req: $Request, {
-      payload,
-    }) => accessTokenCheck(payload),
+    getToken,
+    isRevoked,
     requestProperty: 'user',
     secret,
   };
@@ -173,10 +193,13 @@ export const getRequestAgent = (req: $Request): $Agent => {
     ip,
   } = req;
 
+  let city: string | undefined;
+  let country: string | undefined;
+
   const output = {
     browser,
-    city: undefined,
-    country: undefined,
+    city,
+    country,
     ip,
     os,
     platform,

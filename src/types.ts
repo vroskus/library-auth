@@ -2,7 +2,7 @@ export type $Agent = {
   browser: string;
   city?: string;
   country?: string;
-  ip: string;
+  ip?: string;
   os: string;
   platform: string;
 };
