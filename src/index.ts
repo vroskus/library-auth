@@ -18,7 +18,7 @@ import {
   expressjwt,
 } from 'express-jwt';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt-nodejs';
+import bcrypt from 'bcryptjs';
 import geoip from 'geoip-lite';
 import useragentMiddleware from 'express-useragent';
 import {
