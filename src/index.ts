@@ -125,7 +125,10 @@ export const userIdMiddleware = <REQ extends $Request>({
           setUserId(accessTokenPayload.id);
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      /* eslint-disable-next-line no-console */
+      console.error(e);
+    }
 
     next();
   };
@@ -139,17 +142,13 @@ export const generateAccessToken = <AT extends object>(
     payload: AT;
     secret: string;
   },
-): string => {
-  const accessToken = jwt.sign(
+): string => jwt.sign(
     params.payload,
     params.secret,
     {
       algorithm,
     },
   );
-
-  return accessToken;
-};
 
 // generatePassword
 export const generatePassword = (
