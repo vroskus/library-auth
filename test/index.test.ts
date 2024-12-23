@@ -24,6 +24,10 @@ import type {
 } from '../src';
 
 const secret = 'secret';
+const successStatus: number = 200;
+const unauthStatus: number = 401;
+const thousandValue: number = 1000;
+const oneValue: number = 1;
 
 describe(
   'auth',
@@ -47,7 +51,7 @@ describe(
         accessTokenCheck,
         secret,
       }));
-      app.use(authResponseMiddleware((error, res) => res.status(401).json({
+      app.use(authResponseMiddleware((error, res) => res.status(unauthStatus).json({
         error: true,
       })));
       app.use(userIdMiddleware({
@@ -70,7 +74,7 @@ describe(
           async () => {
             const response = await request(app).get('/');
 
-            expect(response.status).toBe(401);
+            expect(response.status).toBe(unauthStatus);
             expect(response.body).toHaveProperty(
               'error',
               true,
@@ -94,7 +98,7 @@ describe(
               `Bearer ${accessToken}`,
             );
 
-            expect(response.status).toBe(200);
+            expect(response.status).toBe(successStatus);
             expect(response.body).toHaveProperty(
               'done',
               true,
@@ -107,7 +111,7 @@ describe(
           async () => {
             const accessToken = generateAccessToken({
               payload: {
-                exp: Math.floor(Date.now() / 1000) + 1,
+                exp: Math.floor(Date.now() / thousandValue) + oneValue,
                 id: 'string',
                 tokenId: 'string',
                 tokenType: 'string',
@@ -120,16 +124,16 @@ describe(
               `Bearer ${accessToken}`,
             );
 
-            expect(response1.status).toBe(200);
+            expect(response1.status).toBe(successStatus);
             expect(response1.body).toHaveProperty(
               'done',
               true,
             );
 
-            await new Promise((r) => {
+            await new Promise((resolve) => {
               setTimeout(
-                r,
-                1000,
+                resolve,
+                thousandValue,
               );
             });
 
@@ -138,7 +142,7 @@ describe(
               `Bearer ${accessToken}`,
             );
 
-            expect(response2.status).toBe(401);
+            expect(response2.status).toBe(unauthStatus);
             expect(response2.body).toHaveProperty(
               'error',
               true,
@@ -147,7 +151,7 @@ describe(
         );
 
         it(
-          'should validate access token revokation',
+          'should validate access token revocation',
           async () => {
             const accessToken = generateAccessToken({
               payload: {
@@ -162,7 +166,7 @@ describe(
               `Bearer ${accessToken}`,
             );
 
-            expect(response.status).toBe(401);
+            expect(response.status).toBe(unauthStatus);
             expect(response.body).toHaveProperty(
               'error',
               true,
@@ -175,10 +179,12 @@ describe(
     describe(
       'password',
       () => {
+        /* eslint-disable-next-line sonarjs/no-hardcoded-passwords */
+        const password = 'password';
+
         it(
           'should generate password',
           async () => {
-            const password = 'password';
             const passwordHash = generatePassword(password);
 
             expect(passwordHash).not.toBe(password);
@@ -188,7 +194,6 @@ describe(
         it(
           'should validate password',
           async () => {
-            const password = 'password';
             const passwordHash = generatePassword(password);
             const result = validatePassword(
               password,

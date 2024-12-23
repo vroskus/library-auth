@@ -36,6 +36,7 @@ import type {
 export * from './types';
 
 const algorithm: jwt.Algorithm = 'HS256';
+const salt: number = 12;
 
 // authCheckMiddleware method
 export const authCheckMiddleware = <ATP extends $AccessTokenPayload>({
@@ -105,8 +106,8 @@ export const userIdMiddleware = <REQ extends $Request>({
   cookie,
   setUserId,
 }: {
-  cookie: string,
-  setUserId: (userId: string) => void,
+  cookie: string;
+  setUserId: (userId: string) => void;
 }) => (
     req: REQ,
     res: $Response,
@@ -126,7 +127,6 @@ export const userIdMiddleware = <REQ extends $Request>({
         }
       }
     } catch (e) {
-      /* eslint-disable-next-line no-console */
       console.error(e);
     }
 
@@ -155,7 +155,7 @@ export const generatePassword = (
   input: string,
 ): string => bcrypt.hashSync(
   input,
-  bcrypt.genSaltSync(12),
+  bcrypt.genSaltSync(salt),
 );
 
 // validatePassword
@@ -169,11 +169,11 @@ export const validatePassword = (
 
 // getRequestAgent
 export const getRequestAgent = (req: $Request): $Agent => {
-  const userAgent: {
+  const userAgent: null | {
     browser: string;
     os: string;
     platform: string;
-  } | null = _.get(
+  } = _.get(
     req,
     'useragent',
     null,
@@ -204,10 +204,10 @@ export const getRequestAgent = (req: $Request): $Agent => {
     platform,
   };
 
-  const geoData: {
+  const geoData: null | {
     city: string;
     country: string;
-  } | null = geoip.lookup(ip);
+  } = geoip.lookup(ip);
 
   if (geoData !== null) {
     output.country = geoData.country;
@@ -227,11 +227,11 @@ export const setAuthCookies = ({
   secure,
 }: {
   accessToken: string;
-  domain: string,
+  domain: string;
   expires: Date;
-  key: string,
+  key: string;
   req: $Request;
-  secure: boolean,
+  secure: boolean;
 }): void => {
   setItem(
     req,
@@ -274,8 +274,8 @@ export const removeAuthCookies = ({
   key,
   req,
 }: {
-  domain: string,
-  key: string,
+  domain: string;
+  key: string;
   req: $Request;
 }): void => {
   removeItem(
