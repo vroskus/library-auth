@@ -162,10 +162,16 @@ export const generatePassword = (
 export const validatePassword = (
   input: string,
   hash: string | void,
-): boolean => bcrypt.compareSync(
-  input,
-  hash,
-);
+): boolean => {
+  if (hash) {
+    return bcrypt.compareSync(
+      input,
+      hash,
+    );
+  }
+
+  return false;
+};
 
 // getRequestAgent
 export const getRequestAgent = (req: $Request): $Agent => {
